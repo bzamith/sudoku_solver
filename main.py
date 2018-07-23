@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 ### GRID ### 
 # SQUARE 0 | SQUARE 1 | SQUARE 2
 # SQUARE 3 | SQUARE 4 | SQUARE 5
@@ -10,17 +12,32 @@
 
 import time
 import sudokusolver as ss
+import dictsudoku as ds
 
-grid = [[4,2,7,0,0,5,6,0,3],[1,0,0,0,0,6,0,0,0],[0,6,8,3,0,0,1,0,0],[2,0,0,3,4,0,8,0,1],[0,1,0,0,6,7,0,5,0],[4,0,0,0,5,1,0,2,0],[0,9,0,7,0,4,0,3,2],[0,0,0,3,0,0,0,9,4],[7,3,0,2,0,9,6,0,0]]
-start = time.time()
 print("\n")
-print("INPUT GRID: ")
-ss.print_grid(grid)
-print("\n")
-print("OUTPUT GRID: ")
-result = ss.solve_sudoku(grid)
-ss.print_grid(result)
-end = time.time()
-print("\n")
-print("Elapsed time: "+str(end-start)+"s")
-print("\n")
+print("WELCOME TO SUDOKU SOLVER!")
+print("PLEASE, ENTER THE OPTION DESIRED: EASY, MEDIUM, HARD OR EXPERT => ",end="")
+level = raw_input()
+while(not(level.upper()=="EASY" or level.upper()=="MEDIUM" or level.upper()=="HARD" or level.upper()=="EXPERT")):
+	print("Invalid option, try again => ",end="")
+	level = raw_input()
+print("\n\n")
+grid = ds.get_grid(level)
+if len(grid)>0:
+	print("INPUT GRID: ")
+	ss.print_grid(grid)
+	print("\n")
+	print("GET SOLUTION? (Y)/N) => ",end="")
+	solve = raw_input()
+	while(solve.upper()=="N"):
+		print("WAITING.... (Y)/N => ",end="")
+		solve = raw_input()
+	print("\n\n")
+	print("OUTPUT GRID: ")
+	start = time.time()
+	result = ss.solve_sudoku(grid)
+	ss.print_grid(result)
+	end = time.time()
+	print("\n")
+	print("Elapsed time: "+str(end-start)+"s")
+	print("\n")
