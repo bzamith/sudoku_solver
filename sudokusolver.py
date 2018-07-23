@@ -10,6 +10,19 @@ row_index = 0 #returned by pos()
 column_index = 1 #returned by pos()
 all_options = set([1,2,3,4,5,6,7,8,9])
 
+#Returns flatten list
+def flatten(lis):
+	if(type(lis) == int):
+		return(lis)
+	else:
+		ret = []
+		for element in lis:
+			if type(element) == int:
+				ret.append(element)
+			else:
+				for i in range(0,len(element)):
+					ret.append(element[i])
+		return(ret)
 
 #Returns a list of values from column #index
 def column(grid,index):
@@ -77,22 +90,45 @@ def missing(grid):
 def fullfill(grid):
 	fill = copy.deepcopy(grid)
 	for i in range(0,number_grids):
-		for j in range(0,number_grids):
-			if fill[i][j] != 0:
-				fill[i][j] = '*'
 		while(fill[i].count(0)>0):
 			index = fill[i].index(0)
 			position = pos(i,index) 
 			result = all_options - set(row(grid,position[row_index]))
 			result = result - set(column(grid,position[column_index]))
-			result = result - set(grid[i])
-			fill[i][index] = '*'
-			if len(list(result))==1:
-				grid[i][index] = list(result)[0]
+			fill[i][index] = list(result)
+		#if unique option
+		for j in range(0,number_grids):
+			element = fill[i][j]
+			if type(element) != int: #so it is a list of options
+				if len(element)==1:
+					grid[i][j] = list(element)[0]
+					fill[i][j] = list(element)[0]
+		#otherwise
+		for j in range(0,number_grids):
+			element = fill[i][j]
+			if type(element) != int: #so it is a list of options
+				result = set(element) - set(grid[i])
+				if len(result) == 1:
+					grid[i][j] = list(result)[0]
+					fill[i][j] = list(result)[0]
+				else:
+					fill[i][j] = list(result)
+		#another try
+		result = []
+		for j in range(0,number_grids):
+			result.append(flatten(fill[i][j]))
+			result = flatten(result)
+		for j in range(0,number_grids):
+			element = fill[i][j]
+			if type(element) != int:
+				for subelement in element:
+					if result.count(subelement)==1: #so it is a list of options
+						fill[i][j] = subelement
+						grid[i][j] = subelement				
 	return(grid)
 
 #Solve the Sudoku
-def solve_sudoku(grid):
+def solve_sudoku(grid,iter):
 	try: 
 		if len(grid)<size_grids or len(grid[0])<size_grids:
 			raise NameError('Invalid Size of Grid')
@@ -100,8 +136,14 @@ def solve_sudoku(grid):
 		print("Invalid Size of Grid ("+str(size_grids)+")")
 		raise
 	previous = missing(grid)
+	it = 0
 	while(previous>0):
 		fullfill(grid)
+		if iter:
+			print("\nIt "+str(it)+":")
+			print_grid(grid)
+			print("\n\n")
+		it += 1
 		try:
 			if previous == missing(grid):
 				raise NameError('Grid not Solvable')

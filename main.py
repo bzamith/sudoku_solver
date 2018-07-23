@@ -17,10 +17,10 @@ import dictsudoku as ds
 print("\n")
 print("WELCOME TO SUDOKU SOLVER!")
 print("PLEASE, ENTER THE OPTION DESIRED: EASY, MEDIUM, HARD OR EXPERT => ",end="")
-level = raw_input()
+level = input()
 while(not(level.upper()=="EASY" or level.upper()=="MEDIUM" or level.upper()=="HARD" or level.upper()=="EXPERT")):
 	print("Invalid option, try again => ",end="")
-	level = raw_input()
+	level = input()
 print("\n\n")
 grid = ds.get_grid(level)
 if len(grid)>0:
@@ -28,16 +28,25 @@ if len(grid)>0:
 	ss.print_grid(grid)
 	print("\n")
 	print("GET SOLUTION? (Y)/N) => ",end="")
-	solve = raw_input()
+	solve = input()
 	while(solve.upper()=="N"):
 		print("WAITING.... (Y)/N => ",end="")
-		solve = raw_input()
-	print("\n\n")
-	print("OUTPUT GRID: ")
+		solve = input()
+	print("")
+	print("PRINT ITERATIONS? Y/(N) => ",end="")
+	it = input()
+	if it.upper()=="Y":
+		it = True
+	elif it.upper() == "N":
+		it = False
+	else:	
+		solve = False	
+	print("")
 	start = time.time()
-	result = ss.solve_sudoku(grid)
-	ss.print_grid(result)
+	result = ss.solve_sudoku(grid,it)
 	end = time.time()
+	print("OUTPUT GRID: ")
+	ss.print_grid(result)
 	print("\n")
 	print("Elapsed time: "+str(end-start)+"s")
 	print("\n")
