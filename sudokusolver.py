@@ -1,4 +1,6 @@
+from __future__ import print_function
 import copy
+import sys
 
 global size_grids, number_grids, all_options, row_index, column_index 
 size_grids = 3 #3x3
@@ -107,3 +109,27 @@ def solve_sudoku(grid):
 			raise
 		previous = missing(grid)
 	return(grid)
+
+#Print grid
+def print_grid(grid):
+	try: 
+		if len(grid)<size_grids or len(grid[0])<size_grids:
+			raise NameError('Invalid Size of Grid')
+	except NameError: 
+		print("Invalid Size of Grid ("+str(size_grids)+")")
+		raise
+	line = "-"*((number_grids*2)+((size_grids-1)*2))
+	for i in range(0,number_grids):
+		if i%size_grids==0:
+			print(line+"\n",end="")
+		curr_row = row(grid,i)
+		show = ""
+		for j in range(0,size_grids):
+			val = j*size_grids
+			ret = curr_row[val:(val+size_grids)]
+			for element in ret:
+				print(str(element)+" ",end="")
+			if j < size_grids - 1:
+				print("| ",end="")
+		print("")
+	print(line+"\n",end="")

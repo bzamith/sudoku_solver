@@ -8,9 +8,19 @@
 # X3 X4 X5
 # X6 X7 X8
 
-
+import time
 import sudokusolver as ss
 
 grid = [[4,2,7,0,0,5,6,0,3],[1,0,0,0,0,6,0,0,0],[0,6,8,3,0,0,1,0,0],[2,0,0,3,4,0,8,0,1],[0,1,0,0,6,7,0,5,0],[4,0,0,0,5,1,0,2,0],[0,9,0,7,0,4,0,3,2],[0,0,0,3,0,0,0,9,4],[7,3,0,2,0,9,6,0,0]]
+start = time.time()
+print("\n")
+print("INPUT GRID: ")
+ss.print_grid(grid)
+print("\n")
+print("OUTPUT GRID: ")
 result = ss.solve_sudoku(grid)
-print(result)
+ss.print_grid(result)
+end = time.time()
+print("\n")
+print("Elapsed time: "+str(end-start)+"s")
+print("\n")
