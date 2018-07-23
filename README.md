@@ -10,3 +10,5 @@ Works with Python 2.7, Python 3 and newer versions as well
 - [x] Throws exceptions regarding invalid positions access
 - [x] Throws exceptions regarding a not solvable grid
 - [ ] Makes use of Numpy or Pandas
+- [x] Fancy grid print
+- [x] Calculates the elapsed time
