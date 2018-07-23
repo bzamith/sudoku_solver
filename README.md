@@ -11,6 +11,7 @@ Works with Python 2.7, Python 3 and newer versions as well
 - [x] Throws exceptions regarding a not solvable grid
 - [ ] Makes use of Numpy or Pandas
 - [x] Fancy grid print
+- [x] Print iterations
 - [x] Calculates the elapsed time
 - [x] Level selection
 - [x] Dictionary of grids
