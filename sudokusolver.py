@@ -95,14 +95,14 @@ def get_column_neighbors(board,i,j):
 	return(ret)
 
 #Get board Neighbors
-def get_board_neighbors(board,i,j):
+def get_grid_neighbors(board,i,j):
 	ret =copy.deepcopy(board[i])
 	del ret[j]
 	return(ret)
 
 #Get Neighbors
 def get_neighbors(board,i,j):
-	ret = [get_row_neighbors(board,i,j),get_column_neighbors(board,i,j),get_board_neighbors(board,i,j)]
+	ret = [get_row_neighbors(board,i,j),get_column_neighbors(board,i,j),get_grid_neighbors(board,i,j)]
 	ret = flatten(ret)
 	return ret
 
@@ -123,41 +123,34 @@ def is_options(board,i,j):
 #Returns a list of possible values 
 def fullfill(board):
 	fill = copy.deepcopy(board)
+	#create fill board (with options)
 	for i in range(0,number_grids):
 		while(fill[i].count(0)>0):
 			index = fill[i].index(0)
-			position = pos(i,index) 
 			result = all_options - set(get_neighbors(board,i,index))
-			fill[i][index] = list(result)
-		#if unique option
+			if len(list(result)) == 1:
+				board[i][index] = list(result)[0]
+				fill[i][index] = list(result)[0]
+			else:
+				fill[i][index] = list(result)
+	#check
+	for i in range(0,number_grids):
 		for j in range(0,number_grids):
 			element = fill[i][j]
+			result_column = list(set(flatten(get_column_neighbors(fill,i,j))))
+			result_row = list(set(flatten(get_row_neighbors(fill,i,j))))
+			result_grid = list(set(flatten(get_grid_neighbors(fill,i,j))))
 			if type(element) != int: #so it is a list of options
-				if len(element)==1:
-					board[i][j] = list(element)[0]
-					fill[i][j] = list(element)[0]
-		#otherwise
-		for j in range(0,number_grids):
-			element = fill[i][j]
-			if type(element) != int: #so it is a list of options
-				result = set(element) - set(get_board_neighbors(board,i,j))
-				if len(result) == 1:
-					board[i][j] = list(result)[0]
-					fill[i][j] = list(result)[0]
-				else:
-					fill[i][j] = list(result)
-		#another try
-		result = []
-		for j in range(0,number_grids):
-			result.append(flatten(fill[i][j]))
-			result = flatten(result)
-		for j in range(0,number_grids):
-			element = fill[i][j]
-			if type(element) != int:
 				for subelement in element:
-					if result.count(subelement)==1: #so it is a list of options
+					if result_column.count(subelement)==0: 
 						fill[i][j] = subelement
-						board[i][j] = subelement				
+						board[i][j] = subelement
+					elif result_row.count(subelement)==0:
+						fill[i][j] = subelement
+						board[i][j] = subelement
+					elif result_grid.count(subelement)==0:
+						fill[i][j] = subelement
+						board[i][j] = subelement
 	return(board)
 
 
@@ -180,7 +173,7 @@ def solve_sudoku(board,iter):
 		it += 1
 		try:
 			if previous == missing(board):
-				raise NameError('board not Solvable')
+				raise NameError('Board not Solvable')
 		except NameError: 
 			print("It is not possible to solve such Sudoku board")
 			raise
