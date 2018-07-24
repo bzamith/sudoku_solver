@@ -114,8 +114,8 @@ def missing(board):
 	return(count)
 
 #Returns if is a fixed value or list of options
-def is_options(board,i,j):
-	if type(board[i,j])!=int:
+def is_options(value):
+	if type(value)!=int:
 		return True
 	else:
 		return False
@@ -140,7 +140,7 @@ def fullfill(board):
 			result_column = list(set(flatten(get_column_neighbors(fill,i,j))))
 			result_row = list(set(flatten(get_row_neighbors(fill,i,j))))
 			result_grid = list(set(flatten(get_grid_neighbors(fill,i,j))))
-			if type(element) != int: #so it is a list of options
+			if is_options(element): #so it is a list of options
 				for subelement in element:
 					if result_column.count(subelement)==0: 
 						fill[i][j] = subelement
