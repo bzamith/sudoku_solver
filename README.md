@@ -16,3 +16,13 @@ Works with Python 2.7, Python 3 and newer versions as well
 - [x] Level selection
 - [x] Dictionary of grids
 - [ ] Implement OCR
+
+## Running
+Inside the extracted directory, run:
+```
+python3 main.py
+```
+Or, for older versions:
+```
+python main.py
+```
