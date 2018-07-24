@@ -4,7 +4,7 @@ Works with Python 2.7, Python 3 and newer versions as well
 
 - [x] Works for Easy Level
 - [x] Works for Medium Level
-- [ ] Works for Hard Level
+- [x] Works for Hard Level
 - [ ] Works for Expert Level
 - [x] Throws exceptions regarding the size of the grid
 - [x] Throws exceptions regarding invalid positions access
