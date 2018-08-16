@@ -22,7 +22,7 @@ import dictsudoku as ds
 
 print("\n")
 print("WELCOME TO SUDOKU SOLVER!")
-print("PLEASE, ENTER THE OPTION DESIRED: EASY, MEDIUM, HARD OR EXPERT => ",end="")
+print("PLEASE, ENTER THE DESIRED OPTION: EASY, MEDIUM, HARD OR EXPERT => ",end="")
 level = get_input()
 while(not(level.upper()=="EASY" or level.upper()=="MEDIUM" or level.upper()=="HARD" or level.upper()=="EXPERT")):
 	print("Invalid option, try again => ",end="")
@@ -33,7 +33,7 @@ if len(board)>0:
 	print("INPUT BOARD: ")
 	ss.print_board(board)
 	print("\n")
-	print("GET SOLUTION? (Y)/N) => ",end="")
+	print("GET SOLUTION? (Y)/N => ",end="")
 	solve = get_input()
 	while(solve.upper()=="N"):
 		print("WAITING.... (Y)/N => ",end="")
